@@ -1,0 +1,5 @@
+version: '2'
+services:
+    blog_web:
+        ports:
+            - "48000:80"
