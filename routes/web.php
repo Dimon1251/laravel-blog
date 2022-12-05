@@ -13,19 +13,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'App\Http\Controllers\MainController@blog')->name('blog');
-Route::get('/reviewonepost/{id}', 'App\Http\Controllers\MainController@reviewonepost')->name('reviewonepost');
-Route::get('/admin', 'App\Http\Controllers\MainController@admin')->name('admin');
-Route::get('/deletepost/{id}', 'App\Http\Controllers\MainController@deletepost')->name('deletepost');
-Route::get('/register', 'App\Http\Controllers\MainController@register')->name('register');
-Route::get('/login', 'App\Http\Controllers\MainController@login')->name('login');
-Route::get('/exit', 'App\Http\Controllers\MainController@exit')->name('exit');
-Route::get('/createpost', 'App\Http\Controllers\MainController@createpost')->name('createpost');
-
-Route::post('/addcomment', 'App\Http\Controllers\MainController@addcomment')->name('addcomment');;
-Route::post('/addpost', 'App\Http\Controllers\MainController@addpost')->name('addpost');
-Route::post('/updatepost', 'App\Http\Controllers\MainController@updatepost')->name('updatepost');
-Route::post('/auth', 'App\Http\Controllers\MainController@auth')->name('auth');
-Route::post('/registeracc', 'App\Http\Controllers\MainController@registeracc')->name('registeracc');
+Route::get('/', 'App\Http\Controllers\PostController@index')->name('blog');
+Route::get('/vpn', 'App\Http\Controllers\MainController@vpn')->name('vpn');
 
 
+Route::get('/reviewonepost/{id}', 'App\Http\Controllers\PostController@show')->name('reviewonepost');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/admin', 'App\Http\Controllers\MainController@admin')->name('admin');
+});
+
+
+Route::get('/deletepost/{id}', 'App\Http\Controllers\PostController@destroy')->name('deletepost');
+
+
+Route::get('/createpost', 'App\Http\Controllers\PostController@create')->name('createpost');
+
+Route::post('/addcomment', 'App\Http\Controllers\CommentController@store')->name('addcomment');
+
+Route::post('/addpost', 'App\Http\Controllers\PostController@store')->name('addpost');
+Route::post('/updatepost', 'App\Http\Controllers\PostController@update')->name('updatepost');
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

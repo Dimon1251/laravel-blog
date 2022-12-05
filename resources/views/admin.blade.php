@@ -4,16 +4,14 @@
 
 @section('main_content')
 
-<h1 style="margin: 30px 150px">Admin panel</h1>
+<h1>Admin panel</h1>
 <main>
     <section class="posts">
-        <h2 style="margin: 0 150px">Posts</h2>
-        <div class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom" >
+        <div class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom rounded-3 border shadow-lg" >
              @foreach ($posts as $post)
             <form action="updatepost" method="post">
                 @csrf
                 <input hidden type="text" name="id" value="{{$post->id}}">
-
                 <img src="{{$post->image}}" alt="photo" width="200px" height="100%">
                 <div class = "area">
                     <label>Image link</label>
