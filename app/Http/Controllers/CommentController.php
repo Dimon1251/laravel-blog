@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreCommentRequest;
+
 use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
@@ -35,17 +37,16 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCommentRequest  $request)
     {
         Comment::create([
             'author' => Auth::user()->name,
             'post_id' => $request->id,
-            'text' => $request->comment,
-            'created_at' => date("Y-m-d H:i:s"),
+            'text' => $request->text,
         ]);
 
 
-        return redirect()->route('reviewonepost', $request->id);
+        return redirect()->route('show', $request->id);
     }
 
     /**

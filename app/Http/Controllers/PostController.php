@@ -7,6 +7,9 @@ use App\Models\Comment;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StorePostRequest;
+
 
 class PostController extends Controller
 {
@@ -18,7 +21,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return view('post/blog', ['posts' => $posts]);
+        return view('post.blog', ['posts' => $posts]);
     }
 
     /**
@@ -28,7 +31,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post/createpost');
+        return view('post.create');
     }
 
     /**
@@ -37,17 +40,14 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        $valid = $request->validate([
-            'title' => 'required|min:4|max:50',
-            'content' => 'required|min:4|max:5000',
-            'image' => 'required|min:4|max:500'
-        ]);
-        Post::firstOrCreate(
+        $post = Post::firstOrCreate(
             ['title' => $request->title],
-            ['content' => $request->content, 'image' => $request->image, 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")]
+            ['content' => $request->content, 'image' => $request->image]
         );
+        Storage::put('post'.$post->id.'.jpg', $request->image);
+
 
         return redirect()->route('blog');
     }
@@ -60,10 +60,10 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::where('id', $id)->get();
-        $comments = Comment::all();
-        $post=$post[0];
-        return view('post/reviewonepost', ['post' => $post, 'comments' => $comments]);
+        $post = Post::find($id);
+        $comments =  $post->comments;
+
+        return view('post.show', ['post' => $post, 'comments' => $comments]);
     }
 
     /**
@@ -87,7 +87,8 @@ class PostController extends Controller
     public function update(Request $request/*, $id*/)
     {
         Post::where('id', $request->id)
-            ->update(['title' => $request->title, 'content' => $request->content, 'image' => $request->image, 'updated_at' => date("Y-m-d H:i:s")]);
+            ->update(['title' => $request->title, 'content' => $request->content, 'image' => $request->image]);
+        Storage::put('post'.$request->id.'.jpg', $request->image);
 
         return redirect()->route('admin');
 
@@ -102,6 +103,8 @@ class PostController extends Controller
     public function destroy($id)
     {
         Post::destroy($id);
+        Storage::delete('post'.$id.'.jpg');
+
         return redirect()->route('admin');
     }
 }

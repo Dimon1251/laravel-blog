@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
             $table->string('author')->nullable();
             $table->text('text')->nullable();
-            $table->dateTime('created_at')->nullable();
+            $table->timestamps();
         });
     }
 

@@ -17,7 +17,7 @@ Route::get('/', 'App\Http\Controllers\PostController@index')->name('blog');
 Route::get('/vpn', 'App\Http\Controllers\MainController@vpn')->name('vpn');
 
 
-Route::get('/reviewonepost/{id}', 'App\Http\Controllers\PostController@show')->name('reviewonepost');
+Route::get('/show/{id}', 'App\Http\Controllers\PostController@show')->name('show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/admin', 'App\Http\Controllers\MainController@admin')->name('admin');
@@ -27,9 +27,9 @@ Route::middleware('auth')->group(function () {
 Route::get('/deletepost/{id}', 'App\Http\Controllers\PostController@destroy')->name('deletepost');
 
 
-Route::get('/createpost', 'App\Http\Controllers\PostController@create')->name('createpost');
+Route::get('/create', 'App\Http\Controllers\PostController@create')->name('create');
 
-Route::post('/addcomment', 'App\Http\Controllers\CommentController@store')->name('addcomment');
+Route::post('/store', 'App\Http\Controllers\CommentController@store')->name('store');
 
 Route::post('/addpost', 'App\Http\Controllers\PostController@store')->name('addpost');
 Route::post('/updatepost', 'App\Http\Controllers\PostController@update')->name('updatepost');

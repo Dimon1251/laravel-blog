@@ -1,4 +1,5 @@
-
+import $ from "jquery";
+import "slick-carousel";
 
 $(document).mouseup(function (e) {
     var container = $(".menu__box");
@@ -82,43 +83,49 @@ fetch('https://testimonialapi.toolcarton.com/api')
 
 		    document.slider.append(card);*/
 		    let card = `<div class="slider__item">
-						<div class="rating__top">
-							<div class="rating__pic">
-								<img src="${data[x].avatar}" alt="user">
-							</div>
-							<div>
-								<div class="rating__title">
-									${data[x].name}
-								</div>
-								<p class="rating__subtitle">
-									${data[x].location}
-								</p>
-							</div>
-							<p class="rating__value">
-								${data[x].rating}
-							</p>
-						</div>
-						<div class="rating__bottom">
-							<p class="rating__desc">
-								"${data[x].message}"
-							</p>
-						</div>
-					</div>`
+                            <div class="rating__top">
+                                <div class="rating__pic">
+                                    <img src="${data[x].avatar}" alt="user">
+                                </div>
+                                <div>
+                                    <div class="rating__title">
+                                        ${data[x].name}
+                                    </div>
+                                    <p class="rating__subtitle">
+                                        ${data[x].location}
+                                    </p>
+                                </div>
+                                <p class="rating__value">
+                                    ${data[x].rating}
+                                </p>
+                            </div>
+                            <div class="rating__bottom">
+                                <p class="rating__desc">
+                                    "${data[x].message}"
+                                </p>
+                            </div>
+                        </div>`
 			$('#js_slider').append(card);
 		}
 
-			$(document).ready(function(){
-		$('.slider').slick({
-		arrows:true,
-		dots:true,
-		infinite: true,
-  		variableWidth:true,
-  		appendDots:$('.rating__button-left'),
-  		appendArrows:$('.rating__button-right'),
 
-	});
-});
 
 
 	})
+
+
+
+$(document).ready(function(){
+    $('.slider').slick({
+        arrows:true,
+        dots:true,
+        infinite: true,
+        variableWidth:true,
+        appendDots:$('.rating__button-left'),
+        appendArrows:$('.rating__button-right'),
+    });
+});
+
+
+
 
