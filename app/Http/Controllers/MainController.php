@@ -10,8 +10,7 @@ class MainController extends Controller
 {
 
     public function admin() {
-        $posts = Post::all();
-        return view('admin', ['posts' => $posts]);
+        return view('admin.admin-panel');
     }
 
     public function vpn() {

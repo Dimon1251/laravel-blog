@@ -6,6 +6,7 @@ use App\Models\Comment;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StorePostRequest;
@@ -44,9 +45,12 @@ class PostController extends Controller
     {
         $post = Post::firstOrCreate(
             ['title' => $request->title],
-            ['content' => $request->content, 'image' => $request->image]
+            ['content' => $request->content, 'author' => Auth::user()->name, 'links' => $request->links]
         );
-        Storage::put('post'.$post->id.'.jpg', $request->image);
+
+        for ($i = 1; $i <= count($request->links); $i++) {
+            Storage::put('post/'.$post->id.'/'.$i.'.jpg', $request->links['link'.$i-1]);
+        }
 
 
         return redirect()->route('blog');
@@ -61,7 +65,7 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        $comments =  $post->comments;
+        $comments = $post->comments;
 
         return view('post.show', ['post' => $post, 'comments' => $comments]);
     }
@@ -84,27 +88,5 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request/*, $id*/)
-    {
-        Post::where('id', $request->id)
-            ->update(['title' => $request->title, 'content' => $request->content, 'image' => $request->image]);
-        Storage::put('post'.$request->id.'.jpg', $request->image);
 
-        return redirect()->route('admin');
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        Post::destroy($id);
-        Storage::delete('post'.$id.'.jpg');
-
-        return redirect()->route('admin');
-    }
 }

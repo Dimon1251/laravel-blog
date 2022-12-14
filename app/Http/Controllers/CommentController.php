@@ -45,8 +45,7 @@ class CommentController extends Controller
             'text' => $request->text,
         ]);
 
-
-        return redirect()->route('show', $request->id);
+        return redirect()->route('posts.show', $request->id);
     }
 
     /**

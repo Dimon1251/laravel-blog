@@ -23,9 +23,17 @@
             @endif
 
             <div class="container col-xxl-12 px-4 py-5 align-items-center rounded-3 border shadow-lg">
-                <form action="addpost" method="post">
+                <form action="{{ route('posts.store') }}" method="post">
                     @csrf
-                    <input type="text" class="form-control" name="image" placeholder="Enter the URL links"><br>
+                    <div class="form-group">
+                        <label>Ссылки на дополнительную информацию</label>
+                        <table class="table table-bordered" id="linksTable">
+                            <tr>
+                                <td><input type="text" name="links[link0]" placeholder="Введите ссылку" class="form-control name_list" /></td>
+                            </tr>
+                        </table>
+                        <button type="button" name="add" id="add" class="btn btn-success">Еще ссылка</button>
+                    </div>
                     <input type="text" class="form-control" name="title" placeholder="Enter the name"><br>
                     <textarea rows="10" class="form-control" name="content" placeholder="Enter the description"></textarea><br>
                     <button class="btn btn-success" type="submit">Create</button>

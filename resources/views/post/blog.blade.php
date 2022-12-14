@@ -7,9 +7,9 @@
 @section('main_content')
     @if(Auth::check())
         <div class="d-grid gap-2 d-md-flex justify-content-center mb-4 mb-lg-3">
-            <button type="button" onclick="window.location.href = '/create';"
+            <a href="{{ route('posts.create') }}"
                     class="btn btn-outline-secondary btn-lg px-4">Create new post
-            </button>
+            </a>
         </div>
     @endif
 
@@ -22,15 +22,17 @@
                     <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
                         <p class="lead">Created: {{$post->created_at}}</p>
                         <p class="lead">Updated: {{$post->updated_at}}</p>
+                        <p class="lead">Author: {{$post->author}}</p>
+
                     </div>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-                        <button type="button" onclick="window.location.href = 'show/{{$post->id}}'"
+                        <button type="button" onclick="window.location.href = 'posts/{{$post->id}}'"
                                 class="btn btn-outline-secondary btn-lg px-4">View
                         </button>
                     </div>
                 </div>
                 <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
-                    <img class="rounded-lg-3" src="{{Storage::get('post'.$post->id.'.jpg')}}" alt="" width="720">
+                    <img class="rounded-lg-3" src="{{Storage::get('post/'.$post->id.'/1.jpg')}}" alt="" width="720">
                 </div>
             </div>
         </div>

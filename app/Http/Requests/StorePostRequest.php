@@ -28,7 +28,6 @@ class StorePostRequest extends FormRequest
         return [
                 'title' => 'required|min:4|max:50',
                 'content' => 'required|min:4|max:5000',
-                'image' => 'required|min:4|max:500'
         ];
     }
 }

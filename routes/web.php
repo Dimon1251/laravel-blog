@@ -13,28 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'App\Http\Controllers\PostController@index')->name('blog');
-Route::get('/vpn', 'App\Http\Controllers\MainController@vpn')->name('vpn');
+Route::get('/', [App\Http\Controllers\PostController::class, 'index'])->name('blog');
+Route::get('/vpn', [App\Http\Controllers\MainController::class, 'vpn'])->name('vpn');
 
+Route::get('/posts/create', [App\Http\Controllers\PostController::class, 'create'])->name('posts.create');
+Route::get('/posts/{id}', [App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
+Route::post('/posts', [App\Http\Controllers\PostController::class, 'store'])->name('posts.store');
 
-Route::get('/show/{id}', 'App\Http\Controllers\PostController@show')->name('show');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/admin', 'App\Http\Controllers\MainController@admin')->name('admin');
-});
-
-
-Route::get('/deletepost/{id}', 'App\Http\Controllers\PostController@destroy')->name('deletepost');
-
-
-Route::get('/create', 'App\Http\Controllers\PostController@create')->name('create');
-
-Route::post('/store', 'App\Http\Controllers\CommentController@store')->name('store');
-
-Route::post('/addpost', 'App\Http\Controllers\PostController@store')->name('addpost');
-Route::post('/updatepost', 'App\Http\Controllers\PostController@update')->name('updatepost');
+Route::post('/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
 
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+

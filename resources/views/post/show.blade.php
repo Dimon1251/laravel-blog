@@ -9,15 +9,44 @@
     <main>
         <div class="container col-xxl-12 px-4 py-5 align-items-center rounded-3 border shadow-lg">
             <div class="row flex-lg-row-reverse align-items-center g-5 py-5 px-5">
-                <div class="col-10 col-sm-8 col-lg-6">
-                    <img src="{{Storage::get('post'.$post->id.'.jpg')}}" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700"
-                         height="500" loading="lazy">
+
+
+                @if (count($post->links) == 1)
+                    <div class="col-10 col-sm-8 col-lg-6">
+                        <img class="d-block mx-lg-auto img-fluid" src="{{Storage::get('post/'.$post->id.'/1.jpg')}}" alt="slide" width="700" height="500">
+                    </div>
+                @else
+
+                <div id="carousel" class="carousel slide col-10 col-sm-8 col-lg-6" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img class="d-block mx-lg-auto img-fluid" src="{{Storage::get('post/'.$post->id.'/1.jpg')}}" alt="slide" width="700" height="500">
+                        </div>
+                        @for ($i = 2; $i <= count($post->links); $i++)
+                            <div class="carousel-item">
+                                <img class="d-block mx-lg-auto img-fluid" src="{{Storage::get('post/'.$post->id.'/'.$i.'.jpg')}}" alt="slide" width="700" height="500">
+                            </div>
+                        @endfor
+                    </div>
+                    <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
+                @endif
+
+
                 <div class="col-lg-6">
                     <h1 class="display-5 fw-bold lh-1   mb-3">{{$post->title}}</h1></br>
                     <p class="lead">{{$post->content}}</p></br>
                     <p class="lead">Created: {{$post->created_at}}</p>
                     <p class="lead">Updated: {{$post->updated_at}}</p>
+                    <p class="lead">Author: {{$post->author}}</p>
+
                 </div>
             </div>
         </div>
@@ -67,7 +96,7 @@
                                             <h6 class="fw-bold text-primary mb-1">{{Auth::user()->name}} </h6>
                                         </div>
                                     </div>
-                                    <form method="post" action="/store">
+                                    <form method="post" action="{{ route('comments.store') }}">
                                         @csrf
                                         <div class="d-flex flex-start w-100">
 
@@ -92,3 +121,13 @@
     </main>
 
 @endsection
+
+<script>
+
+    $(function () {
+        $('#carousel').carousel({
+
+        });
+    });
+
+</script>

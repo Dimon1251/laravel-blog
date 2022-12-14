@@ -14,10 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
+            $table->json('links')->default('[]');
             $table->id('id');
             $table->string('title')->nullable();
+            $table->string('author');
+            $table->foreign('author')->references('name')->on('users')->onDelete('cascade');
             $table->text('content')->nullable();
-            $table->text('image')->nullable();
             $table->timestamps();
         });
     }
