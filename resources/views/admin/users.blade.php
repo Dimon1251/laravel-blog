@@ -34,6 +34,11 @@
                                     <th style="width:25%">Email</th>
                                     <th style="width:25%">Password</th>
                                     <th style="width:25%">Created</th>
+                                    <th style="width:25%">Is_Banned</th>
+
+                                    <th>Ban</th>
+                                    <th>Unban</th>
+
                                     <th>Login</th>
                                     <th>Delete</th>
 
@@ -42,12 +47,25 @@
                                 <tbody>
                                 @foreach ($users as $user)
                                     <tr>
+                                        <td>{{$user->name}}</td>
+                                        <td>{{$user->email}}</td>
+                                        <td>{{$user->password}}</td>
+                                        <td>{{$user->created_at}}</td>
+                                        <td>{{$user->is_banned}}</td>
+                                        <form action="{{ route('admin.users.ban', $user->id) }}" method="post">
+                                            @csrf
+                                            <td class="table-action">
+                                                <button type="submit" ><i class="align-middle fas fa-fw fa-check"></i></button>
+                                            </td>
+                                        </form>
+                                        <form action="{{ route('admin.users.unban', $user->id) }}" method="post">
+                                            @csrf
+                                            <td class="table-action">
+                                                <button type="submit" ><i class="align-middle fas fa-fw fa-ban"></i></button>
+                                            </td>
+                                        </form>
                                         <form action="{{ route('admin.users.login', $user->id) }}" method="post">
                                             @csrf
-                                            <td>{{$user->name}}</td>
-                                            <td>{{$user->email}}</td>
-                                            <td>{{$user->password}}</td>
-                                            <td>{{$user->created_at}}</td>
                                             <td class="table-action">
                                                 <button type="submit" ><i class="align-middle fas fa-fw fa-edit"></i></button>
                                             </td>

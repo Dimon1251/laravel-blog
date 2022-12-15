@@ -17,4 +17,8 @@ class MainController extends Controller
         return view('vpn');
     }
 
+    public function ban() {
+        return view('ban');
+    }
+
 }

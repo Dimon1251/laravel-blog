@@ -13,15 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [App\Http\Controllers\PostController::class, 'index'])->name('blog');
-Route::get('/vpn', [App\Http\Controllers\MainController::class, 'vpn'])->name('vpn');
+Route::get('/ban', [App\Http\Controllers\MainController::class, 'ban'])->name('ban');
 
-Route::get('/posts/create', [App\Http\Controllers\PostController::class, 'create'])->name('posts.create');
-Route::get('/posts/{id}', [App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
-Route::post('/posts', [App\Http\Controllers\PostController::class, 'store'])->name('posts.store');
+Route::group(['middleware' => 'ban'], function () {
+    Route::get('/', [App\Http\Controllers\PostController::class, 'index'])->name('blog');
+    Route::get('/vpn', [App\Http\Controllers\MainController::class, 'vpn'])->name('vpn');
+    Route::get('/posts/create', [App\Http\Controllers\PostController::class, 'create'])->name('posts.create');
+    Route::get('/posts/{id}', [App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
+    Route::post('/posts', [App\Http\Controllers\PostController::class, 'store'])->name('posts.store');
+    Route::post('/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
 
-Route::post('/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
-
+});
 
 Auth::routes();
 

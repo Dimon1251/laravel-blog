@@ -16,6 +16,8 @@ Route::group(['middleware' => ['auth:admin']], function () {
         Route::get('/users', [App\Http\Controllers\AdminController\UserController::class, 'index'])->name('admin.users.index');
         Route::delete('/users/{id}', [App\Http\Controllers\AdminController\UserController::class, 'destroy'])->name('admin.users.destroy');
         Route::post('/users/{id}/login', [App\Http\Controllers\AdminController\UserController::class, 'login'])->name('admin.users.login');
+        Route::post('/users/{id}/ban', [App\Http\Controllers\AdminController\UserController::class, 'ban'])->name('admin.users.ban');
+        Route::post('/users/{id}/unban', [App\Http\Controllers\AdminController\UserController::class, 'unban'])->name('admin.users.unban');
 
 
         Route::get('/posts', [App\Http\Controllers\AdminController\PostController::class, 'index'])->name('admin.posts.index');
