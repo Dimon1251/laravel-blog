@@ -6,11 +6,13 @@
 
 @section('main_content')
     @if(Auth::check())
-        <div class="d-grid gap-2 d-md-flex justify-content-center mb-4 mb-lg-3">
-            <a href="{{ route('posts.create') }}"
-                    class="btn btn-outline-secondary btn-lg px-4">Create new post
-            </a>
-        </div>
+        @if(Auth::user()->subscribed('default'))
+            <div class="d-grid gap-2 d-md-flex justify-content-center mb-4 mb-lg-3">
+                <a href="{{ route('posts.create') }}"
+                        class="btn btn-outline-secondary btn-lg px-4">Create new post
+                </a>
+            </div>
+        @endif
     @endif
 
     @foreach ($posts as $post)

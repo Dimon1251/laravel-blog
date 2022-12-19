@@ -15,7 +15,7 @@
                     <a href="#!"  class="header__link">Features</a>
                 </li>
                 <li class="header__item">
-                    <a href="#!"  class="header__link">Pricing</a>
+                    <a href="{{ route('plans') }}"  class="header__link">Plans</a>
                 </li>
                 <li class="header__item">
                     <a href="/"  class="header__link">Blog</a>
